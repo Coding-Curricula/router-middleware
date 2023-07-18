@@ -9,29 +9,13 @@ app.use(express.json())
 
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms'))
 
-const cb0 = function (req, res, next) {
-    console.log('CB0')
-    // res.send('Hello from A!')
-    // next()
-}
+// import routes
+const exampleRoutes = require('./routes/exampleRoutes')
+const videoGameRoutes = require('./routes/videoGameRoutes')
 
-const cb1 = function (req, res, next) {
-    console.log('CB1')
-    // res.send('Hello from B!')
-    next()
-}
-
-const cb2 = function (req, res) {
-    console.log('CB2')
-    res.send('Hello from C!')
-}
-
-const middleware = function (req, res, next) {
-    console.log('Middleware')
-    next()
-}
-
-app.get('/example/c', [cb0, middleware, cb1, middleware, cb2])
+// use routes
+app.use('/examples', exampleRoutes)
+app.use('/api/v1/video-games', videoGameRoutes)
 
 app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`)
